@@ -20,6 +20,7 @@
         "next": "16.0.10",
         "react": "19.2.3",
         "react-dom": "19.2.3",
+        "semver": "^7.7.4",
         "zustand": "5.0.9"
     },
     "devDependencies": {
