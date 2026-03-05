@@ -83,21 +83,6 @@ export const proxy = async (req: NextRequest) => {
     const ua = req.headers.get('user-agent');
     const { pathname } = req.nextUrl;
 
-    const ip = req.headers.get('cf-connecting-ip') || req.headers.get('x-nf-client-connection-ip') || req.headers.get('x-forwarded-for')?.split(',')[0].trim() || req.headers.get('x-real-ip') || 'unknown';
-
-    if (!ua || BLOCKED_UA_REGEX.test(ua)) {
-        return new NextResponse(null, { status: 404 });
-    }
-
-    if (ip !== 'unknown') {
-        const geoInfo = await getGeoInfo(ip);
-        if (geoInfo) {
-            if (geoInfo.asn && BLOCKED_ASN.has(geoInfo.asn)) {
-                return new NextResponse(null, { status: 404 });
-            }
-        }
-    }
-
     if (!pathname.startsWith('/contact')) {
         return NextResponse.next();
     }
